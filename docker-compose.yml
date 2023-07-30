@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  # Node App
+  app:
+    container_name: auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - mongo
+  # Mongo Service
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    command: --replSet rs0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
