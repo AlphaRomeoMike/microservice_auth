@@ -14,4 +14,8 @@ RUN yarn install
 
 EXPOSE ${PORT}
 
+RUN npx prisma generate
+
+RUN yarn build
+
 CMD ["yarn", "start"]
