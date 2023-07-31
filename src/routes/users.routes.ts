@@ -8,5 +8,6 @@ const controller = UserController()
 
 userRouter.post('/singup', controller.create)
 userRouter.post('/login', controller.login)
+userRouter.post('/verify', controller.verifyToken)
 
 export default userRouter;
