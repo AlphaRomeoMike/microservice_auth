@@ -11,23 +11,34 @@ services:
     environment:
       - NODE_ENV=production
     depends_on:
-      - mongo
+      - mongo-rs
   # Mongo Service
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
+  # mongo:
+  #   image: mongo:4
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: docker
+  #     MONGO_INITDB_ROOT_PASSWORD: docker
+  #     MONGO_INITDB_DATABASE: authdb
+  #   volumes:
+  #     - mongodb_data:/data/db
+  #   networks:
+  #     - app-net
+  mongo-rs:
+    build: ./mongodb_rs
+    container_name: mongodb_replica
     environment:
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGO_DATA_DIR=/data/db
-      - MONGODB_REPLICA_SET_KEY=WXgvaSGf
-      - MONGO_LOG_DIR=/dev/null
-    volumes:
-      - mongodb_data:/data/db
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_REPLICA_HOST: localhost
+      MONGO_INITDB_DATABASE: mongo
+      MONGO_REPLICA_PORT: 27017
+    ports:
+      - '27017:27017'
     networks:
       - app-net
-    
 
 networks:
   app-net:
