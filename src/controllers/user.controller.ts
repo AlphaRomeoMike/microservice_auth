@@ -20,14 +20,16 @@ function UserController() {
    * @returns {Response} response
    */
   const create = async (request: Request, response: Response, next: NextFunction) => {
-    const user: IUser = request.body;
-    console.log(`\u2A2f The current [user] object is `, user);
-    const { error, value } = schemas.users.create.validate(user);
-    if (error) {
-      throw badRequest(error);
+    try {
+      const user: IUser = request.body;
+      console.log(`\u2A2f The current [user] object is `, user);
+      const validation = schemas.users.create.validate(user);
+      let res = await svc.createUser(user)
+      response.status(201).json({ message: "User created", data: res, statusCode: response.statusCode });
+
+    } catch (error) {
+      throw error
     }
-    let res = await svc.createUser(user)
-    response.status(201).json({ message: "User created", data: res, statusCode: response.statusCode });
   };
 
   /**
