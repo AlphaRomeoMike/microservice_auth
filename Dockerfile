@@ -12,10 +12,10 @@ COPY ./ .
 
 RUN yarn install
 
-EXPOSE ${PORT}
-
-RUN npx prisma generate
-
 RUN yarn build
 
+RUN npx prisma migrate dev --name "Initial Migration"
+
 CMD ["yarn", "start"]
+
+EXPOSE ${PORT}
