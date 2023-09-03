@@ -14,7 +14,7 @@ RUN yarn install
 
 RUN yarn build
 
-RUN npx prisma migrate dev --name "Initial Migration"
+RUN npx prisma migrate deploy
 
 CMD ["yarn", "start"]
 
