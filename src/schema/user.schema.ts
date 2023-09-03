@@ -7,7 +7,7 @@ export const userSchema = joi.object().keys({
     password: joi.string().min(6).regex(/^\S*$/, 'Passowrd must be a strong password').required(),
     phoneNumber: joi.string().min(6).required(),
     description: joi.string().optional(),
-    createdAt: joi.date().optional().optional(),
-    updatedAt: joi.date().optional().optional(),
-    deletedAt: joi.date().optional().optional()
+    createdAt: joi.date().optional(),
+    updatedAt: joi.date().optional(),
+    deletedAt: joi.date().optional()
 }).required()
