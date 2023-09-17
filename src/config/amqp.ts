@@ -3,7 +3,7 @@ import config from '.';
 
 
 const connect = async () => {
-  return await amqplib.connect(config.AMPQ_URL!);
+  return await amqplib.connect(config.AMQP_URL!);
 }
 
 export default connect;

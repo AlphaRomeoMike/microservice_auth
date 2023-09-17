@@ -4,6 +4,7 @@ import { schemas } from "../schema/index";
 import { badRequest } from "@hapi/boom";
 import UserService from "../services/user.service";
 import { isNull } from "lodash";
+import LogHandler from "../handlers/log.handler";
 
 function UserController() {
   // Get instance of user service
@@ -22,6 +23,7 @@ function UserController() {
   const create = async (request: Request, response: Response, next: NextFunction) => {
     try {
       const user: IUser = request.body;
+      LogHandler(JSON.stringify(user));
       console.log(`\u2A2f The current [user] object is `, user);
       const validation = schemas.users.create.validate(user);
       let res = await svc.createUser(user)
@@ -46,7 +48,7 @@ function UserController() {
     const { email, password } = requset.body
     const user = await svc.login(email, password);
 
-    console.log(`\u27A7 ${JSON.stringify(user)}`,);
+    LogHandler(JSON.stringify(requset));
 
     if (isNull(user)) {
       throw badRequest('Invalid parameters for authentication')
